@@ -81,4 +81,23 @@ paths attributes is an array of object , this will contain all the kind of value
 fallback : can have values like true, false , blocking 
 
 **fallback : false**
-    1.
+
+    1. The paths returned from getStaticPaths function will be rendered to HTML at build time by getStaticProps.
+    2. If fallback is set to false then any paths not returned by getStaticPaths will result in a 404 page.
+
+
+**fallback : true**
+
+    1. The paths returned from getStaticPaths function will be rendered to HTML at build time by getStaticProps.
+    2. The paths that have not been generated at build time , will not result 404 page,(in case when you will set fallback to true). Instead Next.JS will server a "fallback" version of the page on the first request.
+    3. In the background, Next.js will statically generate the html and json for requested path. This will be done by using getStaticProps.
+    4. When thats's done the browser will receive the json for the requested path . This will used to automatically render the page . For end user, it will look like that it has landed to a fallback page of "Loading...." and then it has moved to the main page.
+    5. At the same time next.JS keeps a track of these new requested paths , so next time when you will try to access the page then you will directly see the page , you wont see the fallback page in this case.
+
+
+**fallback : blocking**
+
+    1. The paths returned from getStaticPaths function will be rendered to HTML at build time by getStaticProps.
+    2. The paths that have not been generated at build time , will not result 404 page,(in case when you will set fallback to blocking). Next.JS will render the page on the server and return the generated HTML.
+    3. When thats's done the browser will receive the html for the requested path . For end user, it will look like "the broswer is requesting the new page" to "the full page is loaded" . Means there will be no flashback of "Loading ... or fallback page".
+    5. At the same time next.JS keeps a track of these new requested paths , so next time when you will try to access the page then you will directly see the page , you wont see the fallback page in this case.
